@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+.decorationsOverviewRuler {
+    display: none !important;
+}
+
+.minimap {
+    display: none !important;
+}
