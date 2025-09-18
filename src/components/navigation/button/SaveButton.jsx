@@ -3,7 +3,7 @@ import React from "react";
 const SaveButton = () => {
   return (
     <button
-      className="flex items-center justify-center bg-green-400 px-5 rounded-md cursor-pointer hover:text-white hover:bg-green-700">
+      className="flex items-center justify-center bg-green-400 px-4 py-6 rounded-md cursor-pointer hover:text-white hover:bg-green-700">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
            className="size-6">
         <path strokeLinecap="round" strokeLinejoin="round"
