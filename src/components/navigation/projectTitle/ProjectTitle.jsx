@@ -17,9 +17,7 @@ const ProjectTitle = () => {
 
     e.preventDefault();
 
-    const titleElement = titleRef.current;
-
-    titleElement.blur();
+    setIsEditing(false);
   };
 
   const onEditingClick = () => {
