@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Editor } from "@monaco-editor/react";
 
 const CodeEditor = ({language, value, onChange, onMount = () => {}}) => {
@@ -26,4 +26,4 @@ const CodeEditor = ({language, value, onChange, onMount = () => {}}) => {
   );
 };
 
-export default CodeEditor;
+export default memo(CodeEditor);
