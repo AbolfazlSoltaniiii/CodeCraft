@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const ProjectTitle = () => {
-  const [title, setTitle] = useState("Untitled");
+const ProjectTitle = ({title, updateTitle}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const titleRef = useRef(null);
 
   const onTitleBlur = (e) => {
     const newTitle = e.target.textContent.trim();
-    setTitle(newTitle !== "" ? newTitle : "Untitled");
+    updateTitle(newTitle !== "" ? newTitle : "Untitled");
     setIsEditing(false);
   };
 
@@ -29,7 +28,7 @@ const ProjectTitle = () => {
 
     const titleElement = titleRef.current;
 
-    setTitle("");
+    updateTitle("");
     titleElement.focus();
   }, [isEditing]);
 
