@@ -29,6 +29,18 @@ const reducer = (state, action) => {
         [action.payload.field]: action.payload.data
       };
     }
+
+    case "resetFields": {
+      localStorage.removeItem("ProjectInfo");
+
+      return {
+        ...state,
+        title: "Untitled",
+        html: "",
+        css: "",
+        js: ""
+      };
+    }
   }
 };
 
@@ -62,9 +74,15 @@ const App = () => {
     }));
   };
 
+  const onDiscardClick = (e) => {
+    e.preventDefault();
+
+    dispatch({type: "resetFields"});
+  };
+
   return (
     <div className="flex flex-col h-screen">
-      <Navigation title={title} dispatch={dispatch} onSaveClick={onSaveClick} />
+      <Navigation title={title} dispatch={dispatch} onSaveClick={onSaveClick} onDiscardClick={onDiscardClick} />
 
       <div className="flex flex-1">
         <CodeEditor
