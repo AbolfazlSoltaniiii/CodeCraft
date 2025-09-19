@@ -1,26 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import Navigation from "./components/navigation/Navigation.jsx";
 import CodeEditor from "./components/editor/codeEditor/CodeEditor.jsx";
 import Preview from "./components/editor/preview/Preview.jsx";
 
+let projectInfo = localStorage.getItem("ProjectInfo");
+projectInfo = JSON.parse(projectInfo);
+
+const initialState = {
+  title: projectInfo?.title || "Untitled",
+  html: projectInfo?.html || "",
+  css: projectInfo?.css || "",
+  js: projectInfo?.js || "",
+  code: ""
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "updateCode": {
+      return {
+        ...state,
+        code: action.payload
+      };
+    }
+
+    case "updateField": {
+      return {
+        ...state,
+        [action.payload.field]: action.payload.data
+      };
+    }
+  }
+};
+
 const App = () => {
-  let projectInfo = localStorage.getItem("ProjectInfo");
-  projectInfo = JSON.parse(projectInfo);
-
-  const [title, setTitle] = useState(projectInfo?.title || "Untitled");
-  const [html, setHtml] = useState(projectInfo?.html || "");
-  const [css, setCss] = useState(projectInfo?.css || "");
-  const [js, setJs] = useState(projectInfo?.js || "");
-
-  const [code, setCode] = useState("");
+  const [{title, html, css, js, code}, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setCode(`
-      ${html}
-      <style>${css}</style>
-      <script>${js}</script>
-    `);
+      dispatch({
+        type: "updateCode",
+        payload: `${html} <style>${css}</style> <script>${js};</script>`
+      });
     }, 2000);
 
     return () => clearTimeout(timeout);
@@ -44,24 +64,39 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Navigation title={title} updateTitle={setTitle} onSaveClick={onSaveClick} />
+      <Navigation title={title} dispatch={dispatch} onSaveClick={onSaveClick} />
 
       <div className="flex flex-1">
         <CodeEditor
           language="html"
           value={html}
-          onChange={(value) => setHtml(value)}
+          onChange={(value) => dispatch({
+            type: "updateField", payload: {
+              field: "html",
+              data: value
+            }
+          })}
           onMount={(editor) => editor.focus()}
         />
         <CodeEditor
           language="css"
           value={css}
-          onChange={(value) => setCss(value)}
+          onChange={(value) => dispatch({
+            type: "updateField", payload: {
+              field: "css",
+              data: value
+            }
+          })}
         />
         <CodeEditor
           language="javascript"
           value={js}
-          onChange={(value) => setJs(value)}
+          onChange={(value) => dispatch({
+            type: "updateField", payload: {
+              field: "js",
+              data: value
+            }
+          })}
         />
       </div>
 

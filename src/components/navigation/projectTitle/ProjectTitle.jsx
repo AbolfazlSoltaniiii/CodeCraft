@@ -1,13 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 
-const ProjectTitle = ({title, updateTitle}) => {
+const ProjectTitle = ({title, dispatch}) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const titleRef = useRef(null);
 
   const onTitleBlur = (e) => {
     const newTitle = e.target.textContent.trim();
-    updateTitle(newTitle !== "" ? newTitle : "Untitled");
+
+    dispatch({
+      type: "updateField", payload: {
+        field: "title",
+        data: newTitle !== "" ? newTitle : "Untitled"
+      }
+    });
+
     setIsEditing(false);
   };
 
@@ -28,7 +35,12 @@ const ProjectTitle = ({title, updateTitle}) => {
 
     const titleElement = titleRef.current;
 
-    updateTitle("");
+    dispatch({
+      type: "updateField", payload: {
+        field: "title",
+        data: ""
+      }
+    });
     titleElement.focus();
   }, [isEditing]);
 
