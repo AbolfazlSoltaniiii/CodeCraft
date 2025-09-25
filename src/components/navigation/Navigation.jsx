@@ -4,7 +4,7 @@ import Button from "./button/Button.jsx";
 
 const Navigation = ({title, dispatch, onSaveClick, onDiscardClick}) => {
   return (
-    <nav className="flex justify-between h-16 p-2 bg-gray-950">
+    <nav className="flex justify-between py-3 md:py-2 px-2 bg-gray-950">
       <ProjectTitle title={title} dispatch={dispatch} />
 
       <div className="flex space-x-4">
