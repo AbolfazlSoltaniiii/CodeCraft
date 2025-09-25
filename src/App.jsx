@@ -1,7 +1,8 @@
 import React, { useEffect, useReducer } from "react";
 import Navigation from "./components/navigation/Navigation.jsx";
-import CodeEditor from "./components/editor/codeEditor/CodeEditor.jsx";
 import Preview from "./components/editor/preview/Preview.jsx";
+import SmallScreenEditor from "./components/editor/SmallScreenEditor.jsx";
+import MediumScreenEditor from "./components/editor/MediumScreenEditor.jsx";
 
 let projectInfo = localStorage.getItem("ProjectInfo");
 projectInfo = JSON.parse(projectInfo);
@@ -84,39 +85,8 @@ const App = () => {
     <div className="flex flex-col h-screen">
       <Navigation title={title} dispatch={dispatch} onSaveClick={onSaveClick} onDiscardClick={onDiscardClick} />
 
-      <div className="flex flex-1">
-        <CodeEditor
-          language="html"
-          value={html}
-          onChange={(value) => dispatch({
-            type: "updateField", payload: {
-              field: "html",
-              data: value
-            }
-          })}
-          onMount={(editor) => editor.focus()}
-        />
-        <CodeEditor
-          language="css"
-          value={css}
-          onChange={(value) => dispatch({
-            type: "updateField", payload: {
-              field: "css",
-              data: value
-            }
-          })}
-        />
-        <CodeEditor
-          language="javascript"
-          value={js}
-          onChange={(value) => dispatch({
-            type: "updateField", payload: {
-              field: "js",
-              data: value
-            }
-          })}
-        />
-      </div>
+      <SmallScreenEditor dispatch={dispatch} html={html} css={css} js={js} />
+      <MediumScreenEditor dispatch={dispatch} html={html} css={css} js={js} />
 
       <Preview code={code} />
     </div>
