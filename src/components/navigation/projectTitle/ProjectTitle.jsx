@@ -30,6 +30,14 @@ const ProjectTitle = ({title, dispatch}) => {
     setIsEditing(!isEditing);
   };
 
+  const onTitleInput = (e) => {
+    const text = e.target.textContent.trim();
+
+    if (text.length >= 10) {
+      setIsEditing(false);
+    }
+  };
+
   useEffect(() => {
     if (!isEditing) return;
 
@@ -53,6 +61,7 @@ const ProjectTitle = ({title, dispatch}) => {
         onBlur={onTitleBlur}
         onKeyDown={onKeyDown}
         ref={titleRef}
+        onInput={onTitleInput}
       >
         {title}
       </span>
